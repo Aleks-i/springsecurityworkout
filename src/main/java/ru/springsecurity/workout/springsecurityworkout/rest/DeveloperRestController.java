@@ -1,9 +1,6 @@
 package ru.springsecurity.workout.springsecurityworkout.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.springsecurity.workout.springsecurityworkout.model.Developer;
 
 import java.util.List;
@@ -15,9 +12,9 @@ import java.util.stream.Stream;
 public class DeveloperRestController {
 
     private List<Developer> DEVELOPERS = Stream.of(
-            new Developer(1L, "Ivanov", "Ivan"),
-            new Developer(2L, "Petrov", "Petr"),
-            new Developer(3L, "Sidorov", "Sidr")
+            new Developer(1L, "Ivan", "Ivanov"),
+            new Developer(2L,"Petr", "Petrov"),
+            new Developer(3L, "Sidr", "Sidorov")
     ).collect(Collectors.toList());
 
     @GetMapping
@@ -30,5 +27,16 @@ public class DeveloperRestController {
         return DEVELOPERS.stream()
                 .filter(developer -> developer.getId().equals(id))
                 .findFirst().orElse(null);
+    }
+
+    @PostMapping
+    public Developer create(@RequestBody Developer developer) {
+        this.DEVELOPERS.add(developer);
+        return developer;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        this.DEVELOPERS.removeIf(developer -> developer.getId().equals(id));
     }
 }

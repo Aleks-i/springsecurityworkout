@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Developer {
     private Long id;
-    private String lastName;
     private String firstName;
+    private String lastName;
 }
